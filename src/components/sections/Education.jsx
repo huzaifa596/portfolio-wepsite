@@ -3,11 +3,11 @@ import { Reveal } from '../ui/Reveal'
 
 export function Education() {
   return (
-    <section className="edu-section" id="education">
+    <section className="edu-section section--alt" id="education">
       <div className="shell">
         <Reveal>
           <div className="section-label">
-            <span className="section-label__num">05</span>
+            <span className="section-label__num">03</span>
             <div className="section-label__line" />
             <span className="section-label__text">EDUCATION</span>
           </div>

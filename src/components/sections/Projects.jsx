@@ -31,7 +31,7 @@ export function Projects() {
       <div className="shell">
         <Reveal>
           <div className="section-label">
-            <span className="section-label__num">03</span>
+            <span className="section-label__num">04</span>
             <div className="section-label__line" />
             <span className="section-label__text">PROJECTS</span>
           </div>

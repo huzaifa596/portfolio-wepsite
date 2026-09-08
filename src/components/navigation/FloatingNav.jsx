@@ -15,11 +15,11 @@ export function FloatingNav({ theme, toggleTheme, activeSection, onNavigate }) {
   }, [])
 
   const navLinks = [
-    { id: 'overview', label: 'Overview', icon: 'spark' },
-    { id: 'research-lab', label: 'Research Lab', icon: 'code' },
-    { id: 'systems', label: 'Systems & Work', icon: 'layers' },
-    { id: 'terminal', label: 'Terminal', icon: 'terminal' },
-    { id: 'timeline', label: 'Timeline & Certs', icon: 'book' },
+    { id: 'overview', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'education', label: 'Education' },
+    { id: 'projects', label: 'Projects' },
   ]
 
   const handleLinkClick = (id) => {

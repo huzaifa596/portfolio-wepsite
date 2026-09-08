@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { portfolio } from '../../data/portfolio'
 import { Icon } from '../ui/Icon'
+import { WorkNodeGraph, projectGraphData } from '../ui/WorkNodeGraph'
 
 // Flat index of core work items with domain tag & year
 const workIndex = [
@@ -61,13 +62,18 @@ function BitcountTicker() {
   )
 }
 
-// 3D hanging ID card with outer-top drop animation & interactive 3D mouse tilt
+// 3D hanging ID card with natural tilt angle, outer-top drop animation & interactive 3D mouse tilt
 function IDCard() {
   const cardRef = useRef(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [imgError, setImgError] = useState(false)
   const [isDropped, setIsDropped] = useState(false)
   const [glare, setGlare] = useState({ x: 50, y: 50 })
+
+  // Natural organic resting baseline angles (tilted to the right)
+  const BASE_ROTX = 4.5
+  const BASE_ROTY = -8.0
+  const BASE_ROTZ = 5.0
 
   useEffect(() => {
     // Trigger drop-in animation from outer top after initial render
@@ -81,8 +87,8 @@ function IDCard() {
     const rect = el.getBoundingClientRect()
     const cx = rect.left + rect.width / 2
     const cy = rect.top + rect.height / 2
-    const rx = ((e.clientY - cy) / (rect.height / 2)) * -14
-    const ry = ((e.clientX - cx) / (rect.width / 2)) * 14
+    const rx = ((e.clientY - cy) / (rect.height / 2)) * -12
+    const ry = ((e.clientX - cx) / (rect.width / 2)) * 12
     const gx = ((e.clientX - rect.left) / rect.width) * 100
     const gy = ((e.clientY - rect.top) / rect.height) * 100
     setTilt({ x: rx, y: ry })
@@ -100,7 +106,7 @@ function IDCard() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Lanyard ribbon & metallic spring clip */}
+      {/* Lanyard ribbon & metallic spring clip with natural right-tilted angle */}
       <div className="id-card-lanyard">
         <div className="id-card-strap-wrap">
           <div className="id-card-strap" />
@@ -114,12 +120,12 @@ function IDCard() {
         </div>
       </div>
 
-      {/* The 3D ID Badge Card */}
+      {/* The 3D ID Badge Card with natural right tilt */}
       <div
         ref={cardRef}
         className="id-card"
         style={{
-          transform: `perspective(1100px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transform: `perspective(1100px) rotateX(${BASE_ROTX + tilt.x}deg) rotateY(${BASE_ROTY + tilt.y}deg) rotateZ(${BASE_ROTZ + tilt.y * 0.25}deg)`,
           transition: tilt.x === 0 && tilt.y === 0
             ? 'transform 650ms cubic-bezier(0.16, 1, 0.3, 1)'
             : 'transform 80ms ease-out',
@@ -226,6 +232,8 @@ function IDCard() {
 
 export function Opening() {
   const [hoveredDomain, setHoveredDomain] = useState(null)
+  const [activeProjectKey, setActiveProjectKey] = useState('XEL-Sepsis')
+  const [indexMode, setIndexMode] = useState('split') // 'split' | 'list'
 
   return (
     <section className="opening-section" id="overview">
@@ -234,6 +242,7 @@ export function Opening() {
         {/* Bitcount Prop Double Motivational Telemetry Bar */}
         <BitcountTicker />
 
+        {/* Hero Top Grid: Identity & Actions on Left, 3D Hanging ID Card on Right */}
         <div className="opening-grid">
 
           {/* Left column — identity & deep intro */}
@@ -305,51 +314,106 @@ export function Opening() {
                 </span>
               </div>
             </div>
-
-            {/* Interactive Work index */}
-            <div className="opening-index">
-              <div className="opening-index-header">
-                <span className="opening-index-label">DIRECT WORK INDEX</span>
-                <span className="opening-index-count">7 REPOSITORIES & PAPERS</span>
-              </div>
-              <ol className="opening-index-list">
-                {workIndex.map((item) => (
-                  <li key={item.title}>
-                    <a
-                      href={item.anchor}
-                      className={`opening-index-row ${hoveredDomain && hoveredDomain !== item.domain ? 'is-dimmed' : ''}`}
-                      onMouseEnter={() => setHoveredDomain(item.domain)}
-                      onMouseLeave={() => setHoveredDomain(null)}
-                    >
-                      <span className="opening-index-title">{item.title}</span>
-                      <span className="opening-index-right">
-                        <span
-                          className="opening-index-domain"
-                          style={{ color: domainColors[item.domain] }}
-                        >
-                          {item.domain}
-                        </span>
-                        <span className="opening-index-year">{item.year}</span>
-                        <Icon name="arrowRight" size={12} className="opening-index-arrow" />
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ol>
-              <div className="opening-index-footer">
-                <span className="opening-index-footer-text">
-                  3 engineering internships · 3 distinct technical zones · Active clinical paper
-                </span>
-              </div>
-            </div>
           </div>
 
-          {/* Right column — 3D hanging ID card */}
+          {/* Right column — 3D hanging ID card (tilted to the right) */}
           <div className="opening-card-col">
             <IDCard />
           </div>
 
         </div>
+
+        {/* NotebookLM-Style Interactive Direct Work Index: Left List + Right Node Graph */}
+        <div className="opening-index">
+          <div className="opening-index-header">
+            <div className="opening-index-header-left">
+              <span className="opening-index-label">DIRECT WORK INDEX // KNOWLEDGE GRAPH</span>
+              <span className="opening-index-count">7 REPOSITORIES & PAPERS</span>
+            </div>
+            {/* Mode Switcher */}
+            <div className="opening-index-modes">
+              <button
+                type="button"
+                className={`opening-mode-btn ${indexMode === 'split' ? 'is-active' : ''}`}
+                onClick={() => setIndexMode('split')}
+                title="Side-by-side View: Left List + Right NotebookLM Node Graph"
+              >
+                <Icon name="spark" size={12} />
+                <span>NOTEBOOK_LM GRAPH [RIGHT]</span>
+              </button>
+              <button
+                type="button"
+                className={`opening-mode-btn ${indexMode === 'list' ? 'is-active' : ''}`}
+                onClick={() => setIndexMode('list')}
+                title="Compact List View"
+              >
+                <Icon name="layers" size={12} />
+                <span>COMPACT LIST</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Side-by-Side Split: Left Project List, Right NotebookLM Node Graph */}
+          <div className={`opening-work-split ${indexMode === 'list' ? 'is-list-only' : ''}`}>
+            
+            {/* Left: Repositories List */}
+            <div className="opening-work-list-col">
+              <ol className="opening-index-list">
+                {workIndex.map((item) => {
+                  const isSelected = activeProjectKey === item.title
+
+                  return (
+                    <li key={item.title}>
+                      <a
+                        href={item.anchor}
+                        className={`opening-index-row ${hoveredDomain && hoveredDomain !== item.domain ? 'is-dimmed' : ''} ${isSelected ? 'is-active-project' : ''}`}
+                        onMouseEnter={() => {
+                          setHoveredDomain(item.domain)
+                          setActiveProjectKey(item.title)
+                        }}
+                        onMouseLeave={() => setHoveredDomain(null)}
+                        onClick={() => setActiveProjectKey(item.title)}
+                      >
+                        <div className="opening-index-row-left">
+                          <span className="opening-index-marker" />
+                          <span className="opening-index-title">{item.title}</span>
+                        </div>
+                        <span className="opening-index-right">
+                          <span
+                            className="opening-index-domain"
+                            style={{ color: domainColors[item.domain] }}
+                          >
+                            {item.domain}
+                          </span>
+                          <span className="opening-index-year">{item.year}</span>
+                          <Icon name="arrowRight" size={12} className="opening-index-arrow" />
+                        </span>
+                      </a>
+                    </li>
+                  )
+                })}
+              </ol>
+            </div>
+
+            {/* Right: Live NotebookLM Interactive Node Graph */}
+            {indexMode === 'split' && (
+              <div className="opening-work-graph-col">
+                <WorkNodeGraph
+                  activeProjectKey={activeProjectKey}
+                  onSelectProject={setActiveProjectKey}
+                  viewMode={indexMode}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="opening-index-footer">
+            <span className="opening-index-footer-text">
+              Hover over any project in the left list to inspect its <strong>NotebookLM task node graph on the right</strong> · 3 engineering internships · 3 distinct technical zones
+            </span>
+          </div>
+        </div>
+
       </div>
     </section>
   )

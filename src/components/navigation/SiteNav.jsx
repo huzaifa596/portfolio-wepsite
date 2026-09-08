@@ -7,6 +7,7 @@ const navLinks = [
   { id: 'work', label: 'Work' },
   { id: 'experience', label: 'Experience' },
   { id: 'education', label: 'Background' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 export function SiteNav({ theme, toggleTheme, activeSection }) {
@@ -59,12 +60,13 @@ export function SiteNav({ theme, toggleTheme, activeSection }) {
             <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={17} />
             <span className="site-nav-theme-text">{theme === 'dark' ? 'LIGHT' : 'DARK'}</span>
           </button>
-          <a
-            href={`mailto:${portfolio.email}`}
+          <button
+            type="button"
             className="site-nav-cta"
+            onClick={() => handleClick('contact')}
           >
             Get in touch
-          </a>
+          </button>
         </div>
       </div>
     </header>

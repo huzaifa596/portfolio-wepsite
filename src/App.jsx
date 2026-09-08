@@ -12,6 +12,7 @@ import { Opening } from './components/sections/Opening'
 import { WorkDomains } from './components/sections/WorkDomains'
 import { Experience } from './components/sections/Experience'
 import { Background } from './components/sections/Background'
+import { Contact } from './components/sections/Contact'
 import { Footer } from './components/layout/Footer'
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
 
   useEffect(() => {
     const handleScrollSpy = () => {
-      const sections = ['overview', 'work', 'experience', 'education']
+      const sections = ['overview', 'work', 'experience', 'education', 'contact']
       const scrollPos = window.scrollY + 120
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -60,6 +61,7 @@ function App() {
         <WorkDomains />
         <Experience />
         <Background />
+        <Contact />
       </main>
 
       <Footer />

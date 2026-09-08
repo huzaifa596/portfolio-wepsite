@@ -1,254 +1,518 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react'
 import { Icon } from './Icon'
 
-export const projectGraphData = {
+export const projectMindmapData = {
   'XEL-Sepsis': {
     id: 'xel-sepsis',
-    title: 'XEL-Sepsis',
+    title: 'XEL-Sepsis (ICU Clinical AI)',
     year: '2026',
     domain: 'ML / Research',
     anchor: '#work-ml',
-    summary: 'Explainable clinical AI ensemble for early sepsis prediction on 50,000+ ICU stays.',
+    summary: 'Explainable clinical AI ensemble for early sepsis risk prediction on 50,000+ ICU admissions.',
     domainColor: 'var(--sky)',
-    nodes: [
-      { id: 'data', type: 'DATASET', label: '50,000+ MIMIC-IV ICU Cohort', icon: 'database', desc: 'Physiological vitals, lab biomarkers & SOFA scores' },
-      { id: 'arch', type: 'ARCHITECTURE', label: 'XGBoost + LightGBM + LSTM', icon: 'layers', desc: 'Ensemble model capturing static & temporal dynamics' },
-      { id: 'interp', type: 'INTERPRETABILITY', label: 'SHAP Feature Attribution', icon: 'spark', desc: 'Real-time clinician risk factor explainability' },
-      { id: 'metric', type: 'BENCHMARK', label: 'AUROC > 0.93 Target', icon: 'zap', desc: '6-Hour early warning window before clinical onset' },
-      { id: 'action', type: 'DEEP DIVE', label: 'Interactive Model Stepper ↗', icon: 'arrowRight', desc: 'Inspect live SHAP importance & ROC target' }
-    ]
+    branches: [
+      {
+        id: 'foundations',
+        label: 'Clinical Dataset & Biomarkers',
+        subnodes: ['50k+ MIMIC-IV ICU Cohort', '34 Physiological Features', 'SOFA Score Alignment'],
+        icon: 'database',
+        color: '#60a5fa',
+      },
+      {
+        id: 'core-ml',
+        label: 'Core AI & Ensemble Architecture',
+        subnodes: ['XGBoost + LightGBM Boosting', 'LSTM Temporal Sequence Head', 'Cross-Validated Ensemble'],
+        icon: 'layers',
+        color: '#34d399',
+      },
+      {
+        id: 'explainability',
+        label: 'Explainability & SHAP Telemetry',
+        subnodes: ['SHAP Summary Feature Bars', 'Clinician Risk Attribution', 'Dynamic Feature Importance'],
+        icon: 'spark',
+        color: '#a78bfa',
+      },
+      {
+        id: 'benchmarks',
+        label: 'Clinical Benchmarks & Metrics',
+        subnodes: ['AUROC > 0.93 Target', '6-Hour Early Warning Window', 'High Sensitivity (0.88+)'],
+        icon: 'zap',
+        color: '#fbbf24',
+      },
+      {
+        id: 'deployment',
+        label: 'Interactive Clinical Stepper',
+        subnodes: ['Live ROC Target Stepper', 'Lead Author Paper (2026)', 'View Interactive Zone ↗'],
+        icon: 'arrowRight',
+        color: '#38bdf8',
+        isAction: true,
+      },
+    ],
   },
   'Dengue Outbreak Predictor': {
     id: 'dengue-predictor',
-    title: 'Dengue Outbreak Predictor',
+    title: 'Dengue Outbreak Forecasting',
     year: '2026',
     domain: 'ML / Research',
     anchor: '#work-ml',
-    summary: 'Epidemiological machine learning forecasting for Pakistani municipal districts.',
+    summary: 'Epidemiological time-series forecasting model for municipal health surveillance.',
     domainColor: 'var(--sky)',
-    nodes: [
-      { id: 'data', type: 'DATASET', label: 'District Epidemiology Time-Series', icon: 'database', desc: 'Multi-year weekly caseloads & climate vectors' },
-      { id: 'arch', type: 'PIPELINE', label: 'Scikit-Learn Regression Engine', icon: 'layers', desc: 'Feature scaling & lag-time seasonal regression' },
-      { id: 'metric', type: 'VALIDATION', label: '94% Prediction Accuracy', icon: 'zap', desc: 'Validated on national health surveillance datasets' },
-      { id: 'stack', type: 'STACK', label: 'Python · Pandas · Seaborn', icon: 'code', desc: 'Interactive geographic outbreak risk mapping' },
-      { id: 'action', type: 'DEEP DIVE', label: 'View Research Specs ↗', icon: 'arrowRight', desc: 'Jump to ML research overview' }
-    ]
+    branches: [
+      {
+        id: 'data-foundations',
+        label: 'Epidemiological Surveillance Data',
+        subnodes: ['Weekly District Caseloads', 'Rainfall & Humidity Vectors', 'Multi-Year Historical Trends'],
+        icon: 'database',
+        color: '#60a5fa',
+      },
+      {
+        id: 'core-pipeline',
+        label: 'Predictive Feature Pipeline',
+        subnodes: ['Scikit-Learn Lag Regression', 'Seasonal Trend Decomposition', 'Feature Scaling & Imputation'],
+        icon: 'layers',
+        color: '#34d399',
+      },
+      {
+        id: 'accuracy',
+        label: 'Model Accuracy & Validation',
+        subnodes: ['94% District Prediction Accuracy', 'Mean Absolute Error < 4.2%', 'Metropolitan District Testing'],
+        icon: 'zap',
+        color: '#fbbf24',
+      },
+      {
+        id: 'dash',
+        label: 'Outbreak Risk Visualizer',
+        subnodes: ['Python · Pandas · Seaborn', 'Interactive Risk Heatmaps', 'Jump to Research Lab ↗'],
+        icon: 'arrowRight',
+        color: '#38bdf8',
+        isAction: true,
+      },
+    ],
   },
   'HireAtlas': {
     id: 'hireatlas',
-    title: 'HireAtlas',
+    title: 'HireAtlas Talent Infrastructure',
     year: '2026',
     domain: 'MERN / Web',
     anchor: '#work-mern',
-    summary: 'Full-stack candidate tracking & technical recruitment portal.',
+    summary: 'Full-stack recruitment portal with real-time application pipelines and JWT auth.',
     domainColor: 'var(--sky-muted)',
-    nodes: [
-      { id: 'ui', type: 'FRONTEND', label: 'React 19 + Glassmorphism UI', icon: 'react', desc: 'Vite-powered reactive workflow dashboard' },
-      { id: 'api', type: 'BACKEND', label: 'Node.js & Express REST API', icon: 'nodejs', desc: 'Stateless JWT auth & role-based middleware' },
-      { id: 'db', type: 'DATABASE', label: 'MongoDB Atlas Aggregations', icon: 'database', desc: 'High-throughput candidate query pipelines' },
-      { id: 'feature', type: 'FEATURE', label: 'Application State Machine', icon: 'layers', desc: 'Kanban job pipeline with real-time status transitions' },
-      { id: 'action', type: 'DEEP DIVE', label: 'Inspect MERN Pipeline ↗', icon: 'arrowRight', desc: 'View interactive architecture diagram' }
-    ]
+    branches: [
+      {
+        id: 'ui-layer',
+        label: 'Frontend UI & Glassmorphism',
+        subnodes: ['React 19 & Vite Toolchain', 'Reactive Kanban Workflow', 'Glassmorphism Design Tokens'],
+        icon: 'react',
+        color: '#38bdf8',
+      },
+      {
+        id: 'api-layer',
+        label: 'Node.js & Express REST Endpoints',
+        subnodes: ['Stateless JWT Authentication', 'Role-Based Route Middleware', 'Candidate Search & Filtering'],
+        icon: 'nodejs',
+        color: '#34d399',
+      },
+      {
+        id: 'db-layer',
+        label: 'MongoDB Atlas Pipeline',
+        subnodes: ['Aggregation Pipelines', 'Normalized Schema Modeling', 'High-Throughput Indexing'],
+        icon: 'database',
+        color: '#60a5fa',
+      },
+      {
+        id: 'explore-mern',
+        label: 'Interactive MERN Pipeline',
+        subnodes: ['Live Step-by-Step Architecture', 'Source Code on GitHub', 'Explore MERN Zone ↗'],
+        icon: 'arrowRight',
+        color: '#a78bfa',
+        isAction: true,
+      },
+    ],
   },
   'Hospital Billing System': {
     id: 'hospital-billing',
-    title: 'Hospital Billing System',
+    title: 'Hospital Billing Core System',
     year: '2026',
     domain: 'MERN / Web',
     anchor: '#work-mern',
-    summary: 'Production billing & invoice infrastructure built during Tenbit Solutions internship.',
+    summary: 'Production healthcare management & invoicing suite developed at Tenbit Solutions.',
     domainColor: 'var(--sky-muted)',
-    nodes: [
-      { id: 'role', type: 'INTERNSHIP', label: 'Tenbit Solutions MERN Role', icon: 'building', desc: 'Production-grade healthcare administrative software' },
-      { id: 'sec', type: 'SECURITY', label: 'Role-Based Access Control', icon: 'shield', desc: 'Granular permissions for Doctors, Cashiers & Admins' },
-      { id: 'flow', type: 'WORKFLOW', label: 'Automated Invoice Generator', icon: 'zap', desc: 'Real-time billing calculations & transaction logs' },
-      { id: 'stack', type: 'STACK', label: 'MongoDB · Express · React · Node', icon: 'layers', desc: 'Full-stack transactional logging pipeline' },
-      { id: 'action', type: 'DEEP DIVE', label: 'View Engineering Log ↗', icon: 'arrowRight', desc: 'Jump to Tenbit internship deliverables' }
-    ]
+    branches: [
+      {
+        id: 'role-tenbit',
+        label: 'Tenbit Solutions Internship',
+        subnodes: ['Full-Stack MERN Intern', 'Production Medical Invoicing', 'Transactional Data Integrity'],
+        icon: 'building',
+        color: '#60a5fa',
+      },
+      {
+        id: 'security-rbac',
+        label: 'Security & Access Control',
+        subnodes: ['Role-Based Access (RBAC)', 'Cashier, Doctor & Admin Views', 'Audit Trail & Event Logs'],
+        icon: 'shield',
+        color: '#fbbf24',
+      },
+      {
+        id: 'automation',
+        label: 'Invoice & Calculation Engine',
+        subnodes: ['Automated Tax Calculations', 'PDF Invoice Generators', 'Payment Status Tracking'],
+        icon: 'zap',
+        color: '#34d399',
+      },
+      {
+        id: 'view-log',
+        label: 'Engineering Deliverables',
+        subnodes: ['MERN Architecture Pipeline', 'Enterprise Deployment Log', 'View Full Breakdown ↗'],
+        icon: 'arrowRight',
+        color: '#38bdf8',
+        isAction: true,
+      },
+    ],
   },
   'Interactive Web Showcase': {
     id: 'web-showcase',
-    title: 'Interactive Web Showcase',
+    title: 'Modern Web Showcase',
     year: '2026',
     domain: 'MERN / Web',
     anchor: '#work-mern',
-    summary: 'Collection of high-performance responsive landing pages & animations.',
+    summary: 'Suite of modern interactive web layouts with 98+ Lighthouse performance.',
     domainColor: 'var(--sky-muted)',
-    nodes: [
-      { id: 'css', type: 'AESTHETICS', label: 'Modern CSS Grid & Glassmorphism', icon: 'spark', desc: 'Subtle micro-animations and zero layout shift' },
-      { id: 'perf', type: 'PERFORMANCE', label: '98+ Lighthouse Web Vitals', icon: 'zap', desc: 'Optimized bundle footprint and responsive scaling' },
-      { id: 'deploy', type: 'DEPLOYMENT', label: 'Live on Netlify Cloud', icon: 'check', desc: 'Continuous deployment with global CDN edge' },
-      { id: 'action', type: 'DEEP DIVE', label: 'Open Live Showcase ↗', icon: 'arrowUpRight', desc: 'landing-page-school.netlify.app' }
-    ]
+    branches: [
+      {
+        id: 'css-architecture',
+        label: 'CSS Grid & Modern Design',
+        subnodes: ['Semantic HTML5 Markup', 'Vanilla CSS Custom Properties', 'Responsive Flexbox Layouts'],
+        icon: 'spark',
+        color: '#a78bfa',
+      },
+      {
+        id: 'performance',
+        label: 'Performance & Web Vitals',
+        subnodes: ['98+ Lighthouse Web Vitals', 'Zero Layout Shift (CLS 0.0)', 'Micro-Interactions & Hover'],
+        icon: 'zap',
+        color: '#34d399',
+      },
+      {
+        id: 'cloud-deploy',
+        label: 'Live Netlify Cloud Edge',
+        subnodes: ['Continuous Edge Deployment', 'landing-page-school.netlify.app', 'Launch Live Site ↗'],
+        icon: 'arrowUpRight',
+        color: '#60a5fa',
+        isAction: true,
+      },
+    ],
   },
   'Pop Till Drop (x86 Assembly)': {
     id: 'pop-till-drop',
-    title: 'Pop Till Drop (x86 Assembly)',
+    title: 'Pop Till Drop (x86 Engine)',
     year: '2025',
     domain: 'Systems',
     anchor: '#work-systems',
-    summary: 'Real-time arcade game built in bare-metal 16-bit 8088 Assembly language.',
+    summary: 'Arcade video game written in bare-metal 16-bit 8088 Assembly with interrupt handlers.',
     domainColor: 'var(--cyan)',
-    nodes: [
-      { id: 'cpu', type: 'PROCESSOR', label: '16-Bit 8088 Real Mode', icon: 'cpu', desc: 'Direct register manipulation (AX, BX, CX, DX, IP)' },
-      { id: 'isr', type: 'INTERRUPTS', label: 'INT 08h & INT 09h Handlers', icon: 'zap', desc: 'Hardware timer tick clock & custom keyboard ISR' },
-      { id: 'vram', type: 'HARDWARE', label: 'Direct 0xB800 Video RAM', icon: 'terminal', desc: 'Zero-overhead text-mode buffer writes' },
-      { id: 'engine', type: 'GAME LOOP', label: 'Real-Time Balloon Physics', icon: 'layers', desc: 'Dynamic ascending speeds & collision checks' },
-      { id: 'action', type: 'DEEP DIVE', label: 'Step Opcode Stepper ↗', icon: 'arrowRight', desc: 'Run line-by-line assembly in browser' }
-    ]
+    branches: [
+      {
+        id: 'cpu-registers',
+        label: '16-Bit 8088 Real Mode',
+        subnodes: ['Registers (AX, BX, CX, DX, IP)', 'Stack & Segment Math (DS, CS, SS)', 'DOSBox Emulation Environment'],
+        icon: 'cpu',
+        color: '#60a5fa',
+      },
+      {
+        id: 'interrupts',
+        label: 'Hardware Interrupt Service Routines',
+        subnodes: ['INT 08h Timer Clock ISR', 'INT 09h Asynchronous Keyboard ISR', 'INT 10h Video Bios Routines'],
+        icon: 'zap',
+        color: '#fbbf24',
+      },
+      {
+        id: 'video-ram',
+        label: 'Direct 0xB800 Video Memory',
+        subnodes: ['Memory-Mapped Framebuffer', '80x25 Color Text Mode Buffers', 'Direct Port I/O Instructions'],
+        icon: 'terminal',
+        color: '#34d399',
+      },
+      {
+        id: 'stepper',
+        label: 'Live x86 Opcode Stepper',
+        subnodes: ['Step Line-by-Line Assembly', 'Inspect Real-time Registers', 'Run Assembly Stepper ↗'],
+        icon: 'arrowRight',
+        color: '#a78bfa',
+        isAction: true,
+      },
+    ],
   },
   'Tetris Arcade Engine': {
     id: 'tetris-arcade',
-    title: 'Tetris Arcade Engine',
+    title: 'C++20 Tetris Game Engine',
     year: '2024',
     domain: 'Systems',
     anchor: '#work-systems',
-    summary: 'Pure C++ object-oriented Tetris engine with collision matrix logic.',
+    summary: 'Classic arcade engine engineered from scratch in modern C++ with OOP architecture.',
     domainColor: 'var(--cyan)',
-    nodes: [
-      { id: 'lang', type: 'CORE', label: 'Pure Modern C++20 OOP', icon: 'cplusplus', desc: 'Encapsulated block matrices and clean inheritance' },
-      { id: 'math', type: 'COLLISION', label: '2D Rotation & Wall Kicks', icon: 'spark', desc: 'Matrix transposition & bounding box checks' },
-      { id: 'time', type: 'SYSTEMS', label: 'Fixed Timestep Game Clock', icon: 'zap', desc: 'Deterministic frame rate & line-clear scoring' },
-      { id: 'mem', type: 'MEMORY', label: 'Buffer Array Memory Grid', icon: 'database', desc: 'Stack-allocated 2D board state' },
-      { id: 'action', type: 'DEEP DIVE', label: 'View C++ Breakdown ↗', icon: 'arrowRight', desc: 'Jump to systems zone' }
-    ]
-  }
+    branches: [
+      {
+        id: 'cpp-oop',
+        label: 'Modern C++20 OOP Design',
+        subnodes: ['Block Class Encapsulation', 'Grid State Manager Pattern', 'Clean Header Abstractions'],
+        icon: 'cplusplus',
+        color: '#60a5fa',
+      },
+      {
+        id: 'collision-matrix',
+        label: 'Matrix Math & Wall Kicks',
+        subnodes: ['2D Matrix Transposition', 'Bounding Box Collision Logic', 'Piece Drop Preview Math'],
+        icon: 'spark',
+        color: '#a78bfa',
+      },
+      {
+        id: 'frame-loop',
+        label: 'Deterministic Game Loop',
+        subnodes: ['Fixed Timestep Delta Clock', 'Line Clear Score Calculation', 'Stack-Allocated Board Buffer'],
+        icon: 'zap',
+        color: '#34d399',
+      },
+      {
+        id: 'systems-deep',
+        label: 'Systems Engine Deep Dive',
+        subnodes: ['Interactive Logic Explorer', 'C++ Source Walkthrough', 'Jump to Systems Zone ↗'],
+        icon: 'arrowRight',
+        color: '#fbbf24',
+        isAction: true,
+      },
+    ],
+  },
 }
 
-export function WorkNodeGraph({ activeProjectKey, onSelectProject, viewMode = 'split' }) {
-  const currentProject = projectGraphData[activeProjectKey] || projectGraphData['XEL-Sepsis']
-  const [hoveredNodeId, setHoveredNodeId] = useState(null)
+export const projectGraphData = projectMindmapData
 
-  const handleNodeClick = (anchor) => {
-    if (!anchor) return
-    const el = document.querySelector(anchor)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+export function WorkNodeGraph({ activeProjectKey }) {
+  const currentProject = projectMindmapData[activeProjectKey] || projectMindmapData['XEL-Sepsis']
+  const [activeBranchId, setActiveBranchId] = useState(null)
+  const [hoveredBranchId, setHoveredBranchId] = useState(null)
+  const [rootExpanded, setRootExpanded] = useState(true)
+
+  const treeAreaRef = useRef(null)
+  const rootHandleRef = useRef(null)
+  const branchRefs = useRef({})
+  const [wireCoords, setWireCoords] = useState([])
+
+  // Recalculate precise bezier wire coordinates relative to treeAreaRef
+  const updateWires = useCallback(() => {
+    const treeArea = treeAreaRef.current
+    const rootHandle = rootHandleRef.current
+    if (!treeArea || !rootHandle) return
+
+    const treeRect = treeArea.getBoundingClientRect()
+    const rRect = rootHandle.getBoundingClientRect()
+
+    // Root start point is the exact center of the circle handle '<'
+    const startX = rRect.left + rRect.width / 2 - treeRect.left
+    const startY = rRect.top + rRect.height / 2 - treeRect.top
+
+    const wires = currentProject.branches.map((b) => {
+      const branchEl = branchRefs.current[b.id]
+      if (!branchEl) return null
+
+      const bRect = branchEl.getBoundingClientRect()
+      // End point is the left-center of the child node pill
+      const endX = bRect.left - treeRect.left
+      const endY = bRect.top + bRect.height / 2 - treeRect.top
+
+      return {
+        id: b.id,
+        startX,
+        startY,
+        endX,
+        endY,
+      }
+    }).filter(Boolean)
+
+    setWireCoords(wires)
+  }, [currentProject])
+
+  useLayoutEffect(() => {
+    updateWires()
+    const raf = requestAnimationFrame(updateWires)
+    const t = setTimeout(updateWires, 100)
+
+    const treeArea = treeAreaRef.current
+    let ro
+    if (treeArea && window.ResizeObserver) {
+      ro = new ResizeObserver(() => {
+        updateWires()
+      })
+      ro.observe(treeArea)
+    }
+
+    window.addEventListener('resize', updateWires)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(t)
+      if (ro) ro.disconnect()
+      window.removeEventListener('resize', updateWires)
+    }
+  }, [updateWires, activeBranchId, rootExpanded, activeProjectKey])
+
+  const handleBranchClick = (branch) => {
+    if (branch.isAction) {
+      const el = document.querySelector(currentProject.anchor)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      return
+    }
+    setActiveBranchId(activeBranchId === branch.id ? null : branch.id)
   }
 
   return (
-    <div className="work-node-graph-card">
-      {/* Node Graph Header */}
-      <div className="node-graph-header">
-        <div className="node-graph-header-left">
-          <span className="node-graph-pill">NOTEBOOK_LM // NODE GRAPH</span>
-          <span className="node-graph-domain-tag" style={{ color: currentProject.domainColor }}>
-            {currentProject.domain} · {currentProject.year}
-          </span>
+    <div className="mindmap-node-card">
+      
+      {/* Mindmap Header */}
+      <div className="mindmap-header">
+        <div className="mindmap-header-left">
+          <span className="mindmap-badge">NOTEBOOK_LM // TREE GRAPH</span>
+          <span className="mindmap-title-tag">{currentProject.title}</span>
         </div>
-        <div className="node-graph-status">
-          <span className="node-graph-live-dot" />
-          <span>{currentProject.nodes.length} CONNECTED NODES</span>
+        <div className="mindmap-header-right">
+          <span className="mindmap-pulse-dot" />
+          <span>{currentProject.branches.length} BRANCHES</span>
         </div>
       </div>
 
-      {/* Main Interactive Node Canvas */}
-      <div className="node-graph-canvas">
+      {/* Interactive Mindmap Tree Canvas (the exact relative coordinate parent) */}
+      <div className="mindmap-tree-area" ref={treeAreaRef}>
         
-        {/* Central Root Project Node */}
-        <div className="node-root-container">
-          <div className="node-item node-item--root">
-            <div className="node-root-chip">
-              <span className="node-chip-tag">SOURCE ROOT</span>
-              <h4 className="node-root-title">{currentProject.title}</h4>
-              <p className="node-root-desc">{currentProject.summary}</p>
+        {/* Left: Root Node Capsule with Circular '<' Handle */}
+        <div className="mindmap-root-col">
+          <div className="mindmap-root-node">
+            <div className="mindmap-root-content">
+              <span className="mindmap-root-tag">ROOT</span>
+              <span className="mindmap-root-name">{currentProject.title}</span>
             </div>
-            <div className="node-port node-port--right" />
+            {/* The single Circular '<' Handle exactly on the right edge */}
+            <button
+              type="button"
+              ref={rootHandleRef}
+              className={`mindmap-handle-circle ${rootExpanded ? 'is-expanded' : ''}`}
+              onClick={() => setRootExpanded(!rootExpanded)}
+              title="Toggle Mindmap Branches"
+              aria-label="Toggle Mindmap Branches"
+            >
+              <span>‹</span>
+            </button>
           </div>
         </div>
 
-        {/* SVG Connecting Synaptic Wires */}
-        <svg className="node-graph-svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="nodeWireGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="var(--sky)" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="var(--sky-bright)" stopOpacity="0.4" />
-            </linearGradient>
-            <linearGradient id="nodeWireGradActive" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="var(--cyan)" stopOpacity="1" />
-              <stop offset="100%" stopColor="var(--sky-bright)" stopOpacity="0.9" />
-            </linearGradient>
-          </defs>
+        {/* SVG Bezier Connecting Wires */}
+        {rootExpanded && (
+          <svg className="mindmap-svg-layer" aria-hidden="true">
+            <defs>
+              <linearGradient id="mindmapWireGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#818cf8" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="#34d399" stopOpacity="0.8" />
+              </linearGradient>
+              <linearGradient id="mindmapWireGradActive" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#a78bfa" stopOpacity="1" />
+                <stop offset="100%" stopColor="#60a5fa" stopOpacity="1" />
+              </linearGradient>
+            </defs>
 
-          {currentProject.nodes.map((node, idx) => {
-            const total = currentProject.nodes.length
-            // Calculate organic fan-out bezier curves
-            const startX = 14
-            const startY = 50
-            const endX = 86
-            const endY = ((idx + 0.5) / total) * 100
-            const cX1 = startX + 32
-            const cX2 = endX - 32
+            {wireCoords.map((wire) => {
+              const { id, startX, startY, endX, endY } = wire
+              // Organic fan-out cubic bezier curve
+              const dx = Math.max((endX - startX) * 0.55, 30)
+              const pathD = `M ${startX} ${startY} C ${startX + dx} ${startY}, ${endX - dx} ${endY}, ${endX} ${endY}`
+              const isHovered = hoveredBranchId === id
+              const isActive = activeBranchId === id
 
-            const isActive = hoveredNodeId === node.id
+              return (
+                <g key={id}>
+                  {/* Background Track with glow */}
+                  <path
+                    d={pathD}
+                    className={`mindmap-wire ${isHovered || isActive ? 'is-active' : ''}`}
+                    fill="none"
+                    stroke={isHovered || isActive ? 'url(#mindmapWireGradActive)' : 'url(#mindmapWireGrad)'}
+                    strokeWidth={isHovered || isActive ? '3' : '1.8'}
+                  />
+                  {/* Flowing animated pulse dashes */}
+                  <path
+                    d={pathD}
+                    className="mindmap-wire-dash"
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth={isHovered ? '2' : '1.2'}
+                    strokeDasharray="4 10"
+                  />
+                </g>
+              )
+            })}
+          </svg>
+        )}
 
-            return (
-              <g key={node.id}>
-                {/* Background glow track */}
-                <path
-                  d={`M ${startX}% ${startY}% C ${cX1}% ${startY}%, ${cX2}% ${endY}%, ${endX}% ${endY}%`}
-                  className={`node-wire-glow ${isActive ? 'is-active' : ''}`}
-                  fill="none"
-                  strokeWidth={isActive ? '3.5' : '1.5'}
-                />
-                {/* Animated pulse packet traveling along wire */}
-                <path
-                  d={`M ${startX}% ${startY}% C ${cX1}% ${startY}%, ${cX2}% ${endY}%, ${endX}% ${endY}%`}
-                  className="node-wire-pulse"
-                  fill="none"
-                  stroke={isActive ? 'url(#nodeWireGradActive)' : 'url(#nodeWireGrad)'}
-                  strokeWidth={isActive ? '2.5' : '1.5'}
-                />
-              </g>
-            )
-          })}
-        </svg>
+        {/* Right: Stack of Child Node Pills with Circular '>' Handles */}
+        {rootExpanded && (
+          <div className="mindmap-branches-col">
+            {currentProject.branches.map((b) => {
+              const isActive = activeBranchId === b.id
+              const isHovered = hoveredBranchId === b.id
 
-        {/* Child Leaf Task Nodes */}
-        <div className="node-leaves-container">
-          {currentProject.nodes.map((node) => {
-            const isHovered = hoveredNodeId === node.id
-            const isAction = node.type === 'DEEP DIVE' || node.type === 'EXPLORE'
+              return (
+                <div
+                  key={b.id}
+                  ref={(el) => (branchRefs.current[b.id] = el)}
+                  className={`mindmap-branch-wrap ${isActive ? 'is-expanded' : ''}`}
+                >
+                  {/* The Child Node Pill matching the screenshot */}
+                  <div
+                    className={`mindmap-child-node ${isActive ? 'is-active' : ''} ${b.isAction ? 'is-action' : ''}`}
+                    onMouseEnter={() => setHoveredBranchId(b.id)}
+                    onMouseLeave={() => setHoveredBranchId(null)}
+                    onClick={() => handleBranchClick(b)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="mindmap-child-content">
+                      <Icon name={b.icon} size={13} className="mindmap-child-icon" style={{ color: b.color }} />
+                      <span className="mindmap-child-label">{b.label}</span>
+                    </div>
 
-            return (
-              <div
-                key={node.id}
-                className={`node-item node-item--leaf ${isHovered ? 'is-hovered' : ''} ${isAction ? 'node-item--action' : ''}`}
-                onMouseEnter={() => setHoveredNodeId(node.id)}
-                onMouseLeave={() => setHoveredNodeId(null)}
-                onClick={() => handleNodeClick(currentProject.anchor)}
-                role="button"
-                tabIndex={0}
-                title={`Click to jump to ${currentProject.title} section`}
-              >
-                <div className="node-port node-port--left" />
-                <div className="node-leaf-chip">
-                  <div className="node-leaf-header">
-                    <span className="node-leaf-tag">{node.type}</span>
-                    <Icon name={node.icon} size={13} className="node-leaf-icon" />
+                    {/* Circular '>' Handle on Right Edge */}
+                    <div className={`mindmap-child-handle ${isActive ? 'is-open' : ''}`}>
+                      <span>›</span>
+                    </div>
                   </div>
-                  <div className="node-leaf-label">{node.label}</div>
-                  <div className="node-leaf-desc">{node.desc}</div>
+
+                  {/* Expanded 2nd-Level Sub-Nodes (Mindmap detail leaves) */}
+                  {isActive && (
+                    <div className="mindmap-subnodes-drawer">
+                      {b.subnodes.map((sub, sIdx) => (
+                        <div key={sIdx} className="mindmap-subnode-pill">
+                          <span className="mindmap-subnode-dot" style={{ background: b.color }} />
+                          <span>{sub}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        )}
 
       </div>
 
-      {/* Node Graph Footer Navigation */}
-      <div className="node-graph-footer">
-        <span className="node-footer-hint">
-          💡 Click any node to jump directly to deep-dive architecture & opcode steppers
+      {/* Mindmap Footer */}
+      <div className="mindmap-footer">
+        <span className="mindmap-footer-hint">
+          Click any <strong>›</strong> node to expand sub-tasks or jump directly to code
         </span>
-        <a
-          href={currentProject.anchor}
-          className="node-footer-cta"
-        >
+        <a href={currentProject.anchor} className="mindmap-footer-cta">
           <span>Jump to {currentProject.title}</span>
           <Icon name="arrowRight" size={13} />
         </a>
       </div>
+
     </div>
   )
 }

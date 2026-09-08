@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b242b"/>
+      <stop offset="50%" stop-color="#07151a"/>
+      <stop offset="100%" stop-color="#030b0e"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6ef3ee"/>
+      <stop offset="100%" stop-color="#25d7d1"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd28d"/>
+      <stop offset="100%" stop-color="#f5b85a"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <rect width="400" height="400" rx="200" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle geometric grid lines -->
+  <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(110, 243, 238, 0.12)" stroke-width="2"/>
+  <circle cx="200" cy="200" r="140" fill="none" stroke="rgba(110, 243, 238, 0.18)" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="95" fill="none" stroke="rgba(245, 184, 90, 0.22)" stroke-width="2"/>
+  
+  <!-- Central Avatar Geometry -->
+  <g transform="translate(200, 195)">
+    <!-- Stylized Head Silhouette / Monogram -->
+    <circle cx="0" cy="-35" r="45" fill="url(#accentGrad)" opacity="0.9" filter="url(#glow)"/>
+    <circle cx="0" cy="-35" r="40" fill="#0c232a"/>
+    
+    <!-- Torso Silhouette -->
+    <path d="M-75,85 C-75,30 75,30 75,85 Z" fill="url(#accentGrad)" opacity="0.85" filter="url(#glow)"/>
+    <path d="M-70,85 C-70,35 70,35 70,85 Z" fill="#081b22"/>
+    
+    <!-- Stylized Monogram HN -->
+    <text x="0" y="-23" font-family="'Satoshi', sans-serif" font-size="32" font-weight="900" fill="url(#accentGrad)" text-anchor="middle" letter-spacing="-1">HN</text>
+    
+    <!-- Tech Accent Node -->
+    <circle cx="0" cy="55" r="5" fill="#f5b85a" filter="url(#glow)"/>
+  </g>
+</svg>

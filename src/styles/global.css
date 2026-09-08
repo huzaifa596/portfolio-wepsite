@@ -28,7 +28,7 @@ body {
 
 /* Typography defaults */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--text-primary);
@@ -61,8 +61,8 @@ ul, ol {
 
 /* Custom Selection */
 ::selection {
-  background: var(--sky);
-  color: #060b14;
+  background: var(--sky-deep);
+  color: var(--ice);
 }
 
 /* Custom Scrollbar */

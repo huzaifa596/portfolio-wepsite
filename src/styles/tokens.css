@@ -1,22 +1,24 @@
 :root {
   /* Font Families */
-  --font-sans: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-bitcount: 'Bitcount Prop Double Variable', 'Bitcount Prop Double', 'JetBrains Mono', monospace;
 
-  /* ─── DARK THEME ─── Black base, pure green shade ladder */
-  --bg:                   #080d09;
-  --bg-subtle:            #0c120d;
-  --surface:              rgba(14, 30, 18, 0.70);
-  --surface-hover:        rgba(20, 44, 26, 0.82);
-  --surface-raised:       rgba(26, 56, 34, 0.88);
-  --surface-glass:        rgba(8, 20, 11, 0.65);
-  --surface-glass-strong: rgba(6, 16, 9, 0.92);
+  /* ─── DARK THEME ─── Carbon Black base, grey tones, green accent */
+  --bg:                   #191919;
+  --bg-subtle:            #202020;
+  --surface:              rgba(30, 30, 30, 0.72);
+  --surface-hover:        rgba(38, 38, 38, 0.85);
+  --surface-raised:       rgba(44, 44, 44, 0.90);
+  --surface-glass:        rgba(25, 25, 25, 0.68);
+  --surface-glass-strong: rgba(20, 20, 20, 0.94);
 
-  /* Green Shade Scale — near-black → Dark Spruce → mid-green → bright mint */
-  --sky-glow:        rgba(52, 170, 100, 0.28);
-  --sky-faint:       rgba(33, 78, 52, 0.14);
-  --sky-line:        rgba(82, 194, 133, 0.20);
-  --sky-line-strong: rgba(82, 194, 133, 0.45);
+  /* Green Accent — Dark Spruce → Bright Mint (stays as brand color) */
+  --sky-glow:        rgba(52, 170, 100, 0.24);
+  --sky-faint:       rgba(52, 170, 100, 0.10);
+  --sky-line:        rgba(206, 208, 206, 0.14);
+  --sky-line-strong: rgba(206, 208, 206, 0.30);
   --sky-muted:       #6dbf93;
   --sky:             #3dab6e;
   --sky-bright:      #52c285;
@@ -25,28 +27,28 @@
   --ice:             #DFF8EB;
 
   /* Glassmorphism Tokens */
-  --glass-blur:         blur(24px) saturate(150%);
-  --glass-border:       1px solid rgba(82, 194, 133, 0.14);
-  --glass-border-hover: 1px solid rgba(82, 194, 133, 0.42);
-  --glass-shadow:       0 16px 40px -8px rgba(0, 0, 0, 0.80), 0 0 1px 1px rgba(52, 170, 100, 0.08) inset;
-  --glass-sheen:        linear-gradient(135deg, rgba(52, 170, 100, 0.07) 0%, rgba(14, 30, 18, 0.02) 100%);
+  --glass-blur:         blur(20px) saturate(140%);
+  --glass-border:       1px solid rgba(206, 208, 206, 0.12);
+  --glass-border-hover: 1px solid rgba(82, 194, 133, 0.36);
+  --glass-shadow:       0 16px 40px -8px rgba(0, 0, 0, 0.75), 0 0 1px 1px rgba(255, 255, 255, 0.04) inset;
+  --glass-sheen:        linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
 
-  /* Typography Colors */
-  --text-primary:   #DFF8EB;
-  --text-secondary: #b0cfba;
-  --text-muted:     #5e8a6e;
-  --text-faint:     #3a5544;
+  /* Typography — White & grey palette from the image */
+  --text-primary:   #FFFFFF;
+  --text-secondary: #E6E8E6;
+  --text-muted:     #CED0CE;
+  --text-faint:     #8a8e8a;
 
   /* Status Badges */
-  --badge-bg:     rgba(52, 170, 100, 0.14);
-  --badge-border: rgba(82, 194, 133, 0.32);
+  --badge-bg:     rgba(52, 170, 100, 0.12);
+  --badge-border: rgba(82, 194, 133, 0.28);
   --badge-text:   #6dbf93;
 
   /* Shadows & Radius */
-  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.55);
-  --shadow-md:  0 8px 24px rgba(0, 0, 0, 0.65);
-  --shadow-lg:  0 24px 56px -12px rgba(0, 0, 0, 0.82);
-  --shadow-sky: 0 12px 36px rgba(52, 170, 100, 0.28);
+  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.50);
+  --shadow-md:  0 8px 24px rgba(0, 0, 0, 0.60);
+  --shadow-lg:  0 24px 56px -12px rgba(0, 0, 0, 0.80);
+  --shadow-sky: 0 12px 36px rgba(52, 170, 100, 0.22);
 
   --radius-sm:   8px;
   --radius-md:   14px;

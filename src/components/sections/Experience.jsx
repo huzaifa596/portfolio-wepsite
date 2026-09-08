@@ -1,43 +1,39 @@
 import { experience } from '../../data/portfolio'
-import { Reveal } from '../ui/Reveal'
 
 export function Experience() {
   return (
-    <section className="exp-section section--alt" id="experience">
+    <section className="exp-section" id="experience">
       <div className="shell">
-        <Reveal>
-          <div className="section-label">
-            <span className="section-label__num">02</span>
-            <div className="section-label__line" />
-            <span className="section-label__text">EXPERIENCE</span>
-          </div>
-        </Reveal>
+        <div className="exp-header reveal-on-scroll">
+          <span className="section-tag">Experience</span>
+          <h2 className="exp-title">Three internships, three stacks, two years.</h2>
+        </div>
 
-        <div className="exp__list">
+        <div className="exp-timeline">
           {experience.map((item, index) => (
-            <Reveal key={`${item.company}-${item.role}`} delay={index * 100}>
-              <article className="exp__item">
-                <div className="exp__item-left">
-                  <span className="exp__period">{item.period}</span>
-                  {item.current && (
-                    <span className="exp__current-badge"><i />NOW</span>
-                  )}
+            <article key={`${item.company}-${item.role}`} className="exp-entry reveal-on-scroll" style={{ '--delay': `${index * 80}ms` }}>
+              <div className="exp-entry-left">
+                <span className="exp-period">{item.period}</span>
+                {item.current && <span className="exp-now">NOW</span>}
+              </div>
+              <div className="exp-entry-line">
+                <div className="exp-entry-dot" />
+                {index < experience.length - 1 && <div className="exp-entry-line-track" />}
+              </div>
+              <div className="exp-entry-right">
+                <div className="exp-entry-heading">
+                  <h3 className="exp-company">{item.company}</h3>
+                  <span className="exp-role">{item.role}</span>
                 </div>
-                <div className="exp__item-right">
-                  <div className="exp__item-top">
-                    <h3 className="exp__company">{item.company}</h3>
-                    <span className="exp__role">{item.role}</span>
-                  </div>
-                  <p className="exp__summary">{item.summary}</p>
-                  <ul className="exp__bullets">
-                    {item.bullets.map((b) => <li key={b}>{b}</li>)}
-                  </ul>
-                  <div className="exp__tags">
-                    {item.tags.map((t) => <span key={t} className="chip">{t}</span>)}
-                  </div>
+                <p className="exp-summary">{item.summary}</p>
+                <ul className="exp-bullets">
+                  {item.bullets.map((b) => <li key={b}>{b}</li>)}
+                </ul>
+                <div className="exp-tech">
+                  {item.tags.map(t => <code key={t} className="exp-tech-item">{t}</code>)}
                 </div>
-              </article>
-            </Reveal>
+              </div>
+            </article>
           ))}
         </div>
       </div>

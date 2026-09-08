@@ -2230,3 +2230,196 @@
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   INTERACTIVE BACKGROUND SYSTEM
+   Canvas particle constellation, parallax floating tech tokens & sonar wave
+   ========================================================================== */
+main {
+  position: relative;
+  z-index: 2;
+}
+
+.interactive-bg-wrap {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.bg-interactive-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bg-grid-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image: 
+    radial-gradient(var(--sky-line) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(circle at center, black 60%, transparent 95%);
+  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 95%);
+}
+
+[data-theme='light'] .bg-grid-overlay {
+  opacity: 0.18;
+}
+
+/* Floating Interactive Tech Elements */
+.bg-floating-elements {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bg-tech-item {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate(-50%, -50%);
+}
+
+/* Organic sinusoidal floating variations */
+.bg-tech-item:nth-child(1) { animation: bgFloat1 18s ease-in-out infinite; }
+.bg-tech-item:nth-child(2) { animation: bgFloat2 22s ease-in-out infinite 2s; }
+.bg-tech-item:nth-child(3) { animation: bgFloat3 20s ease-in-out infinite 4s; }
+.bg-tech-item:nth-child(4) { animation: bgFloat4 24s ease-in-out infinite 1s; }
+.bg-tech-item:nth-child(5) { animation: bgFloat1 19s ease-in-out infinite 3s; }
+.bg-tech-item:nth-child(6) { animation: bgFloat2 21s ease-in-out infinite 5s; }
+.bg-tech-item:nth-child(7) { animation: bgFloat3 23s ease-in-out infinite 2.5s; }
+.bg-tech-item:nth-child(8) { animation: bgFloat4 25s ease-in-out infinite 4.5s; }
+
+.bg-tech-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: var(--surface-glass);
+  border: 1px solid var(--sky-line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  opacity: 0.42;
+  transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme='light'] .bg-tech-chip {
+  opacity: 0.5;
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(33, 78, 52, 0.18);
+  box-shadow: 0 4px 14px rgba(1, 22, 56, 0.06);
+}
+
+.bg-tech-item:hover .bg-tech-chip,
+.bg-tech-item.is-active .bg-tech-chip {
+  opacity: 1;
+  transform: translateY(-4px) scale(1.08);
+  border-color: var(--sky);
+  background: var(--surface-raised);
+  box-shadow: 0 10px 28px -4px var(--sky-glow), 0 0 0 1px var(--sky);
+}
+
+.bg-tech-tag {
+  font-family: var(--font-bitcount);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--sky);
+  line-height: 1;
+}
+
+.bg-tech-main {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bg-tech-icon {
+  color: var(--sky-bright);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.bg-tech-item:hover .bg-tech-icon {
+  transform: rotate(8deg) scale(1.15);
+}
+
+.bg-tech-label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.bg-tech-sub {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  border-top: 1px dashed var(--sky-line);
+  padding-top: 4px;
+  margin-top: 2px;
+  animation: fadeInSub 180ms ease-out;
+}
+
+@keyframes fadeInSub {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bgFloat1 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) translateY(-14px) rotate(1.5deg); }
+}
+
+@keyframes bgFloat2 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) translateY(16px) rotate(-1.5deg); }
+}
+
+@keyframes bgFloat3 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px) translateX(0px); }
+  50% { transform: translate(-50%, -50%) translateY(-12px) translateX(8px); }
+}
+
+@keyframes bgFloat4 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px) translateX(0px); }
+  50% { transform: translate(-50%, -50%) translateY(14px) translateX(-8px); }
+}
+
+@media (max-width: 1024px) {
+  .bg-tech-item {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-tech-item {
+    animation: none !important;
+  }
+}
+

@@ -13,8 +13,12 @@ import { Experience } from './components/sections/Experience'
 import { Background } from './components/sections/Background'
 import { Contact } from './components/sections/Contact'
 import { Footer } from './components/layout/Footer'
+import { ProjectCaseStudy } from './components/pages/ProjectCaseStudy'
 
 function App() {
+  const projectMatch = window.location.pathname.match(/^\/projects\/([^/]+)\/?$/)
+  if (projectMatch) return <ProjectCaseStudy slug={projectMatch[1]} />
+
   const { theme, toggleTheme } = useTheme()
   const scrollProgress = useScrollProgress()
   useScrollReveal()

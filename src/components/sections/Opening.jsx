@@ -4,9 +4,9 @@ import { Icon } from '../ui/Icon'
 import { WorkNodeGraph } from '../ui/WorkNodeGraph'
 
 const workIndex = [
-  { title: 'XEL-Sepsis', label: 'Clinical AI', anchor: '#work-ml' },
-  { title: 'HireAtlas', label: 'Full-stack', anchor: '#work-mern' },
-  { title: 'Pop Till Drop (x86 Assembly)', label: 'Systems', anchor: '#work-systems' },
+  { title: 'XEL-Sepsis', label: 'Clinical AI', slug: 'xel-sepsis' },
+  { title: 'HireAtlas', label: 'Full-stack', slug: 'hireatlas' },
+  { title: 'Pop Till Drop (x86 Assembly)', label: 'Systems', slug: 'assembly-game' },
 ]
 
 const signals = [
@@ -203,6 +203,15 @@ function IDCard() {
 
 export function Opening() {
   const [activeProjectKey, setActiveProjectKey] = useState('XEL-Sepsis')
+  const explorerRef = useRef(null)
+
+  const handleExplorerPointerMove = (event) => {
+    const el = explorerRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    el.style.setProperty('--explorer-x', `${event.clientX - rect.left}px`)
+    el.style.setProperty('--explorer-y', `${event.clientY - rect.top}px`)
+  }
 
   return (
     <section className="opening-section" id="overview">
@@ -288,7 +297,7 @@ export function Opening() {
 
         </div>
 
-        <section className="project-explorer" aria-label="Selected work explorer">
+        <section ref={explorerRef} className="project-explorer" aria-label="Selected work explorer" onPointerMove={handleExplorerPointerMove}>
           <div className="project-explorer-heading">
             <div>
               <span className="section-tag">Selected work</span>
@@ -300,28 +309,21 @@ export function Opening() {
           <div className="project-explorer-layout">
             <div className="project-explorer-tabs" role="tablist" aria-label="Featured projects">
               {workIndex.map((project, index) => (
-                <button
-                  key={project.title}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeProjectKey === project.title}
-                  className={`project-explorer-tab ${activeProjectKey === project.title ? 'is-active' : ''}`}
-                  onClick={() => setActiveProjectKey(project.title)}
-                >
-                  <span className="project-explorer-number">0{index + 1}</span>
-                  <span className="project-explorer-tab-copy">
-                    <strong>{project.title}</strong>
-                    <small>{project.label}</small>
-                  </span>
-                  <Icon name="arrowRight" size={15} />
-                </button>
+                <div key={project.title} className={`project-explorer-tab ${activeProjectKey === project.title ? 'is-active' : ''}`}>
+                  <button type="button" role="tab" aria-selected={activeProjectKey === project.title} onClick={() => setActiveProjectKey(project.title)}>
+                    <span className="project-explorer-number">0{index + 1}</span>
+                    <span className="project-explorer-tab-copy"><strong>{project.title}</strong><small>{project.label}</small></span>
+                    <Icon name="arrowRight" size={15} />
+                  </button>
+                  <a href={`/projects/${project.slug}`} aria-label={`Read ${project.title} case study`} title={`Read ${project.title} case study`}><Icon name="arrowUpRight" size={14} /></a>
+                </div>
               ))}
               <a className="project-explorer-all" href="#work">
                 View all projects <Icon name="arrowRight" size={14} />
               </a>
             </div>
 
-            <div className="project-explorer-graph" role="tabpanel">
+            <div key={activeProjectKey} className="project-explorer-graph" role="tabpanel">
               <WorkNodeGraph activeProjectKey={activeProjectKey} />
             </div>
           </div>

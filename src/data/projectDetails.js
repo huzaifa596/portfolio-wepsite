@@ -1,0 +1,48 @@
+export const projectDetails = {
+  'xel-sepsis': {
+    title: 'XEL-Sepsis',
+    eyebrow: 'Clinical AI · Research in progress',
+    summary: 'An explainable ensemble approach to early sepsis-risk prediction using ICU data.',
+    problem: 'Identify patients at risk of sepsis early enough for clinicians to investigate and respond with context.',
+    contribution: 'Designed an ensemble research pipeline around XGBoost, LightGBM, LSTM, and SHAP-based interpretation for 50,000+ MIMIC-IV ICU admissions.',
+    stack: ['Python', 'XGBoost', 'LightGBM', 'LSTM', 'SHAP'],
+    highlights: ['50k+ ICU admissions in scope', '6-hour early-warning target', 'Explainable feature attribution'],
+    architecture: ['MIMIC-IV clinical data', 'Feature engineering', 'Ensemble modelling', 'SHAP interpretation'],
+    githubUrl: null,
+  },
+  hireatlas: {
+    title: 'HireAtlas',
+    eyebrow: 'Full-stack platform · GitHub documented',
+    summary: 'A full-stack job platform for listings, CV applications, candidate profiles, and application analytics.',
+    problem: 'Make the job-search and candidate-management workflow easier to navigate for both applicants and hiring teams.',
+    contribution: 'Built around a React frontend, a Node backend, and PostgreSQL. The project includes a canonical schema with relationships, validation constraints, performance indexes, and an application-status trigger.',
+    stack: ['React', 'Node.js', 'PostgreSQL', 'REST API', 'JWT'],
+    highlights: ['Candidate profiles and CV applications', 'Application analytics', 'PostgreSQL-backed filters and status workflow'],
+    architecture: ['React + Vite client', 'Node API', 'PostgreSQL schema', 'Role-aware product workflows'],
+    githubUrl: 'https://github.com/huzaifa596/HireAtlas',
+  },
+  'dengue-outbreak-predictor': {
+    title: 'Dengue Outbreak Predictor',
+    eyebrow: 'Machine learning · GitHub documented',
+    summary: 'A forecasting web app that predicts weekly dengue cases in Pakistani cities from weather and surveillance data.',
+    problem: 'Give health authorities an earlier, clearer signal for allocating resources before outbreaks peak.',
+    contribution: 'Combined historical surveillance and weather data into a full-stack system with risk maps, severity classifications, and SHAP explanations.',
+    stack: ['Python', 'Machine Learning', 'SHAP', 'Frontend', 'Backend'],
+    highlights: ['Weekly case forecasting', 'Risk maps and severity classes', 'Explainable model output with SHAP'],
+    architecture: ['Weather + surveillance data', 'Forecasting models', 'Risk classification', 'Full-stack visualisation'],
+    githubUrl: 'https://github.com/MuhammadAhmed1089/Dengue-Outbreak-Predictor',
+  },
+  'assembly-game': {
+    title: 'Pop Till Drop',
+    eyebrow: 'Systems programming · GitHub documented',
+    summary: 'A low-level arcade game organised as a set of focused 8088 assembly modules.',
+    problem: 'Build an interactive game experience with direct, low-level control instead of a high-level engine.',
+    contribution: 'Structured the project into dedicated assembly modules for the main loop, drawing, delays, screen clearing, and printing routines.',
+    stack: ['8088 Assembly', 'DOS', 'Low-level graphics', 'Game loop'],
+    highlights: ['Modular assembly source files', 'Drawing and print routines', 'Timing and main-loop control'],
+    architecture: ['main.asm loop', 'draw.asm rendering', 'delay.asm timing', 'print.asm + clear.asm helpers'],
+    githubUrl: 'https://github.com/huzaifa596/assembly_game',
+  },
+}
+
+export const featuredProjectSlugs = ['xel-sepsis', 'hireatlas', 'dengue-outbreak-predictor', 'assembly-game']

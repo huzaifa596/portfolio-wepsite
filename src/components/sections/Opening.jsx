@@ -1,6 +1,37 @@
 import { useState, useRef, useEffect } from 'react'
 import { portfolio } from '../../data/portfolio'
 import { Icon } from '../ui/Icon'
+import { WorkNodeGraph } from '../ui/WorkNodeGraph'
+
+const workIndex = [
+  { title: 'XEL-Sepsis', label: 'Clinical AI', anchor: '#work-ml' },
+  { title: 'HireAtlas', label: 'Full-stack', anchor: '#work-mern' },
+  { title: 'Pop Till Drop (x86 Assembly)', label: 'Systems', anchor: '#work-systems' },
+]
+
+const signals = [
+  'Available for software engineering internships',
+  'Building reliable web systems and clinical AI',
+  'Based in Lahore, Pakistan · open to collaboration',
+]
+
+function SignalStrip() {
+  const [signalIndex, setSignalIndex] = useState(0)
+
+  return (
+    <button
+      type="button"
+      className="hero-signal-strip"
+      onClick={() => setSignalIndex((current) => (current + 1) % signals.length)}
+      aria-label="Show next availability update"
+      title="Show next update"
+    >
+      <span className="hero-signal-status"><span className="hero-signal-dot" />ONLINE</span>
+      <span className="hero-signal-copy">{signals[signalIndex]}</span>
+      <span className="hero-signal-action">NEXT <Icon name="arrowRight" size={13} /></span>
+    </button>
+  )
+}
 
 // 3D hanging ID card with natural tilt angle, outer-top drop animation & interactive 3D mouse tilt
 function IDCard() {
@@ -171,9 +202,12 @@ function IDCard() {
 }
 
 export function Opening() {
+  const [activeProjectKey, setActiveProjectKey] = useState('XEL-Sepsis')
+
   return (
     <section className="opening-section" id="overview">
       <div className="shell">
+        <SignalStrip />
         <div className="opening-grid">
 
           {/* Left column — identity & deep intro */}
@@ -253,6 +287,45 @@ export function Opening() {
           </div>
 
         </div>
+
+        <section className="project-explorer" aria-label="Selected work explorer">
+          <div className="project-explorer-heading">
+            <div>
+              <span className="section-tag">Selected work</span>
+              <h2>Explore the engineering behind the work.</h2>
+            </div>
+            <p>Choose a project to see its architecture, technical decisions, and a direct path to the relevant case study.</p>
+          </div>
+
+          <div className="project-explorer-layout">
+            <div className="project-explorer-tabs" role="tablist" aria-label="Featured projects">
+              {workIndex.map((project, index) => (
+                <button
+                  key={project.title}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeProjectKey === project.title}
+                  className={`project-explorer-tab ${activeProjectKey === project.title ? 'is-active' : ''}`}
+                  onClick={() => setActiveProjectKey(project.title)}
+                >
+                  <span className="project-explorer-number">0{index + 1}</span>
+                  <span className="project-explorer-tab-copy">
+                    <strong>{project.title}</strong>
+                    <small>{project.label}</small>
+                  </span>
+                  <Icon name="arrowRight" size={15} />
+                </button>
+              ))}
+              <a className="project-explorer-all" href="#work">
+                View all projects <Icon name="arrowRight" size={14} />
+              </a>
+            </div>
+
+            <div className="project-explorer-graph" role="tabpanel">
+              <WorkNodeGraph activeProjectKey={activeProjectKey} />
+            </div>
+          </div>
+        </section>
 
       </div>
     </section>

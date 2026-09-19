@@ -7,7 +7,6 @@ import { useTheme } from './hooks/useTheme'
 import { useScrollProgress, useScrollReveal } from './hooks/useScrollObserver'
 
 import { SiteNav } from './components/navigation/SiteNav'
-import { InteractiveBackground } from './components/canvas/InteractiveBackground'
 import { Opening } from './components/sections/Opening'
 import { WorkDomains } from './components/sections/WorkDomains'
 import { Experience } from './components/sections/Experience'
@@ -53,8 +52,6 @@ function App() {
         toggleTheme={toggleTheme}
         activeSection={activeSection}
       />
-
-      <InteractiveBackground theme={theme} />
 
       <main>
         <Opening />

@@ -4330,4 +4330,106 @@ main {
   }
 }
 
+/* ── Clarity pass ────────────────────────────────────────────────────────
+   Keep the portfolio content-led: the animated background, ticker, and
+   project graph have been removed in favour of quieter spacing and hierarchy. */
+.app-root {
+  background:
+    radial-gradient(circle at 85% 0%, var(--sky-faint), transparent 28rem),
+    var(--bg);
+}
+
+.opening-section {
+  min-height: auto;
+  padding: 132px 0 88px;
+}
+
+.opening-grid {
+  gap: clamp(40px, 6vw, 76px);
+  align-items: center;
+}
+
+.opening-headline {
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+
+.opening-meta-block {
+  max-width: 680px;
+  margin-bottom: 0;
+}
+
+.id-card-rig.is-dropped {
+  animation: cardRigPhysicalDrop 0.8s cubic-bezier(0.18, 0.95, 0.26, 1.05) forwards;
+}
+
+@media (max-width: 768px) {
+  .site-nav-inner {
+    height: 56px;
+  }
+
+  .site-nav-actions {
+    gap: 8px;
+  }
+
+  .site-nav-theme-btn {
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .site-nav-theme-text {
+    display: none;
+  }
+
+  .opening-section {
+    padding: 92px 0 56px;
+  }
+
+  .opening-grid {
+    gap: 30px;
+  }
+
+  .opening-card-col {
+    order: initial;
+    margin: 0 auto;
+  }
+
+  .opening-actions-strip {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .opening-btn {
+    min-height: 44px;
+    justify-content: flex-start;
+    padding-inline: 14px;
+  }
+
+  .opening-meta-row {
+    padding: 14px 0;
+  }
+
+  .id-card-rig {
+    max-width: min(100%, 320px);
+    margin: 0 auto;
+  }
+
+  .id-card-rig.is-dropped {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .opening-headline {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+  }
+
+  .opening-status {
+    align-items: flex-start;
+  }
+}
 

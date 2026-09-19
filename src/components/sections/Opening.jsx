@@ -1,66 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { portfolio } from '../../data/portfolio'
 import { Icon } from '../ui/Icon'
-import { WorkNodeGraph, projectGraphData } from '../ui/WorkNodeGraph'
-
-// Flat index of core work items with domain tag & year
-const workIndex = [
-  { title: 'XEL-Sepsis', year: '2026', domain: 'ML / Research', anchor: '#work-ml' },
-  { title: 'Dengue Outbreak Predictor', year: '2026', domain: 'ML / Research', anchor: '#work-ml' },
-  { title: 'HireAtlas', year: '2026', domain: 'MERN / Web', anchor: '#work-mern' },
-  { title: 'Hospital Billing System', year: '2026', domain: 'MERN / Web', anchor: '#work-mern' },
-  { title: 'Interactive Web Showcase', year: '2026', domain: 'MERN / Web', anchor: '#work-mern' },
-  { title: 'Pop Till Drop (x86 Assembly)', year: '2025', domain: 'Systems', anchor: '#work-systems' },
-  { title: 'Tetris Arcade Engine', year: '2024', domain: 'Systems', anchor: '#work-systems' },
-]
-
-const domainColors = {
-  'ML / Research': 'var(--sky)',
-  'MERN / Web': 'var(--sky-muted)',
-  'Systems': 'var(--cyan)',
-}
-
-const motivationalQuotes = [
-  { opcode: '0x01', text: 'FROM x86 REGISTERS TO DISTRIBUTED CLOUD CLUSTERS.' },
-  { opcode: '0x02', text: 'CLINICAL AI: PRECISION MATTERS WHEN LIVES ARE ON THE LINE.' },
-  { opcode: '0x03', text: 'FIRST SOLVE THE SYSTEM ARCHITECTURE, THEN WRITE THE CODE.' },
-  { opcode: '0x04', text: 'AUROC > 0.90 — BENCHMARK WITH RIGOR, SHIP WITH PRIDE.' },
-  { opcode: '0x05', text: 'CLEAN ABSTRACTIONS, LOW LATENCY, ZERO UNCHECKED ASSUMPTIONS.' },
-]
-
-// Interactive Bitcount motivational badge & ticker
-function BitcountTicker() {
-  const [quoteIdx, setQuoteIdx] = useState(0)
-  const [bits, setBits] = useState('01001000 01001110') // 'HN' in binary
-  const [pulse, setPulse] = useState(false)
-
-  const cycleQuote = () => {
-    setPulse(true)
-    setQuoteIdx((prev) => (prev + 1) % motivationalQuotes.length)
-    const randomHex = Math.floor(Math.random() * 0xffff).toString(16).padStart(4, '0').toUpperCase()
-    setBits(`0x${randomHex} // FAST_CS28`)
-    setTimeout(() => setPulse(false), 300)
-  }
-
-  const current = motivationalQuotes[quoteIdx]
-
-  return (
-    <div className={`bitcount-ticker-bar ${pulse ? 'is-pulsing' : ''}`} onClick={cycleQuote} role="button" tabIndex={0} title="Click to cycle motivational telemetry">
-      <div className="bitcount-ticker-left">
-        <span className="bitcount-pill">SYS_CORE</span>
-        <span className="bitcount-bits">{bits}</span>
-      </div>
-      <div className="bitcount-ticker-quote">
-        <span className="bitcount-opcode">[{current.opcode}]</span>
-        <span className="bitcount-text">{current.text}</span>
-      </div>
-      <div className="bitcount-ticker-btn" aria-label="Cycle quote">
-        <Icon name="spark" size={12} />
-        <span>CYCLE</span>
-      </div>
-    </div>
-  )
-}
 
 // 3D hanging ID card with natural tilt angle, outer-top drop animation & interactive 3D mouse tilt
 function IDCard() {
@@ -231,18 +171,9 @@ function IDCard() {
 }
 
 export function Opening() {
-  const [hoveredDomain, setHoveredDomain] = useState(null)
-  const [activeProjectKey, setActiveProjectKey] = useState('XEL-Sepsis')
-  const [indexMode, setIndexMode] = useState('split') // 'split' | 'list'
-
   return (
     <section className="opening-section" id="overview">
       <div className="shell">
-        
-        {/* Bitcount Prop Double Motivational Telemetry Bar */}
-        <BitcountTicker />
-
-        {/* Hero Top Grid: Identity & Actions on Left, 3D Hanging ID Card on Right */}
         <div className="opening-grid">
 
           {/* Left column — identity & deep intro */}
@@ -321,97 +252,6 @@ export function Opening() {
             <IDCard />
           </div>
 
-        </div>
-
-        {/* NotebookLM-Style Interactive Direct Work Index: Left List + Right Node Graph */}
-        <div className="opening-index">
-          <div className="opening-index-header">
-            <div className="opening-index-header-left">
-              <span className="opening-index-label">DIRECT WORK INDEX // KNOWLEDGE GRAPH</span>
-              <span className="opening-index-count">7 REPOSITORIES & PAPERS</span>
-            </div>
-            {/* Mode Switcher */}
-            <div className="opening-index-modes">
-              <button
-                type="button"
-                className={`opening-mode-btn ${indexMode === 'split' ? 'is-active' : ''}`}
-                onClick={() => setIndexMode('split')}
-                title="Side-by-side View: Left List + Right NotebookLM Node Graph"
-              >
-                <Icon name="spark" size={12} />
-                <span>NOTEBOOK_LM GRAPH [RIGHT]</span>
-              </button>
-              <button
-                type="button"
-                className={`opening-mode-btn ${indexMode === 'list' ? 'is-active' : ''}`}
-                onClick={() => setIndexMode('list')}
-                title="Compact List View"
-              >
-                <Icon name="layers" size={12} />
-                <span>COMPACT LIST</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Side-by-Side Split: Left Project List, Right NotebookLM Node Graph */}
-          <div className={`opening-work-split ${indexMode === 'list' ? 'is-list-only' : ''}`}>
-            
-            {/* Left: Repositories List */}
-            <div className="opening-work-list-col">
-              <ol className="opening-index-list">
-                {workIndex.map((item) => {
-                  const isSelected = activeProjectKey === item.title
-
-                  return (
-                    <li key={item.title}>
-                      <a
-                        href={item.anchor}
-                        className={`opening-index-row ${hoveredDomain && hoveredDomain !== item.domain ? 'is-dimmed' : ''} ${isSelected ? 'is-active-project' : ''}`}
-                        onMouseEnter={() => {
-                          setHoveredDomain(item.domain)
-                          setActiveProjectKey(item.title)
-                        }}
-                        onMouseLeave={() => setHoveredDomain(null)}
-                        onClick={() => setActiveProjectKey(item.title)}
-                      >
-                        <div className="opening-index-row-left">
-                          <span className="opening-index-marker" />
-                          <span className="opening-index-title">{item.title}</span>
-                        </div>
-                        <span className="opening-index-right">
-                          <span
-                            className="opening-index-domain"
-                            style={{ color: domainColors[item.domain] }}
-                          >
-                            {item.domain}
-                          </span>
-                          <span className="opening-index-year">{item.year}</span>
-                          <Icon name="arrowRight" size={12} className="opening-index-arrow" />
-                        </span>
-                      </a>
-                    </li>
-                  )
-                })}
-              </ol>
-            </div>
-
-            {/* Right: Live NotebookLM Interactive Node Graph */}
-            {indexMode === 'split' && (
-              <div className="opening-work-graph-col">
-                <WorkNodeGraph
-                  activeProjectKey={activeProjectKey}
-                  onSelectProject={setActiveProjectKey}
-                  viewMode={indexMode}
-                />
-              </div>
-            )}
-          </div>
-
-          <div className="opening-index-footer">
-            <span className="opening-index-footer-text">
-              Hover over any project in the left list to inspect its <strong>NotebookLM task node graph on the right</strong> · 3 engineering internships · 3 distinct technical zones
-            </span>
-          </div>
         </div>
 
       </div>

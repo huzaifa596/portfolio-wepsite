@@ -16,14 +16,18 @@ import { Footer } from './components/layout/Footer'
 import { ProjectCaseStudy } from './components/pages/ProjectCaseStudy'
 
 function App() {
-  const projectMatch = window.location.pathname.match(/^\/projects\/([^/]+)\/?$/)
-  if (projectMatch) return <ProjectCaseStudy slug={projectMatch[1]} />
-
   const { theme, toggleTheme } = useTheme()
   const scrollProgress = useScrollProgress()
   useScrollReveal()
 
   const [activeSection, setActiveSection] = useState('overview')
+  const [projectSlug, setProjectSlug] = useState(() => window.location.hash.match(/^#\/projects\/([^/]+)\/?$/)?.[1] || null)
+
+  useEffect(() => {
+    const syncProjectRoute = () => setProjectSlug(window.location.hash.match(/^#\/projects\/([^/]+)\/?$/)?.[1] || null)
+    window.addEventListener('hashchange', syncProjectRoute)
+    return () => window.removeEventListener('hashchange', syncProjectRoute)
+  }, [])
 
   useEffect(() => {
     const handleScrollSpy = () => {
@@ -42,6 +46,8 @@ function App() {
     window.addEventListener('scroll', handleScrollSpy, { passive: true })
     return () => window.removeEventListener('scroll', handleScrollSpy)
   }, [])
+
+  if (projectSlug) return <ProjectCaseStudy slug={projectSlug} />
 
   return (
     <div className="app-root">

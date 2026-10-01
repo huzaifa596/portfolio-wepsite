@@ -2,6 +2,8 @@ const paths = {
   arrowRight: <path d="M5 12h14m-6-6 6 6-6 6" />,
   arrowUpRight: <path d="M7 17 17 7M7 7h10v10" />,
   arrowUp: <path d="m18 15-6-6-6 6" />,
+  play: <polygon points="8 5 19 12 8 19 8 5" fill="currentColor" />,
+  pause: <><rect x="7" y="5" width="3" height="14" fill="currentColor" /><rect x="14" y="5" width="3" height="14" fill="currentColor" /></>,
   sun: (
     <>
       <circle cx="12" cy="12" r="5" />

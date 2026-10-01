@@ -1,5 +1,33 @@
+import { useState } from 'react'
 import { Icon } from '../ui/Icon'
 import { projectDetails } from '../../data/projectDetails'
+
+function ProjectStage({ project, slug }) {
+  const [isRunning, setIsRunning] = useState(true)
+
+  return (
+    <section className={`project-stage project-stage--${slug} ${isRunning ? 'is-running' : 'is-paused'}`} aria-label={`${project.title} system visual`}>
+      <div className="project-stage-topline">
+        <span><span className="project-stage-dot" /> LIVE SYSTEM VIEW</span>
+        <button type="button" onClick={() => setIsRunning((current) => !current)}>
+          <Icon name={isRunning ? 'pause' : 'play'} size={13} /> {isRunning ? 'Pause motion' : 'Play motion'}
+        </button>
+      </div>
+      <div className="project-stage-canvas">
+        <div className="project-stage-orbit project-stage-orbit--one" />
+        <div className="project-stage-orbit project-stage-orbit--two" />
+        <div className="project-stage-core"><span>{project.title.split(' ')[0]}</span><small>PROJECT CORE</small></div>
+        {project.architecture.map((item, index) => (
+          <div key={item} className={`project-stage-node project-stage-node--${index + 1}`}>
+            <span>0{index + 1}</span><strong>{item}</strong>
+          </div>
+        ))}
+        <div className="project-stage-scan" />
+      </div>
+      <p>Interactive system map — use the control above to pause or replay the flow.</p>
+    </section>
+  )
+}
 
 export function ProjectCaseStudy({ slug }) {
   const project = projectDetails[slug]
@@ -9,14 +37,14 @@ export function ProjectCaseStudy({ slug }) {
       <main className="case-study-shell case-study-empty">
         <p className="section-tag">404</p>
         <h1>Project not found.</h1>
-        <a className="case-study-back" href="/">Return to the portfolio <Icon name="arrowRight" size={15} /></a>
+        <a className="case-study-back" href="/#/">Return to the portfolio <Icon name="arrowRight" size={15} /></a>
       </main>
     )
   }
 
   return (
     <main className="case-study-shell">
-      <a className="case-study-back" href="/">
+      <a className="case-study-back" href="/#/">
         <Icon name="arrowRight" size={15} /> Back to portfolio
       </a>
 
@@ -25,14 +53,19 @@ export function ProjectCaseStudy({ slug }) {
         <h1>{project.title}</h1>
         <p className="case-study-summary">{project.summary}</p>
         <div className="case-study-actions">
+          <a className="case-study-primary" href="/#/">
+            <Icon name="arrowRight" size={17} /> Explore more work
+          </a>
           {project.githubUrl && (
-            <a className="case-study-primary" href={project.githubUrl} target="_blank" rel="noreferrer">
-              <Icon name="github" size={17} /> View repository
+            <a className="case-study-repo" href={project.githubUrl} target="_blank" rel="noreferrer">
+              <Icon name="github" size={17} /> Repository
             </a>
           )}
           <a className="case-study-secondary" href="/#contact">Start a conversation <Icon name="arrowRight" size={15} /></a>
         </div>
       </header>
+
+      <ProjectStage project={project} slug={slug} />
 
       <section className="case-study-metrics" aria-label="Project highlights">
         {project.highlights.map((item, index) => <div key={item}><span>0{index + 1}</span><strong>{item}</strong></div>)}

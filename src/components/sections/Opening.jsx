@@ -315,7 +315,7 @@ export function Opening() {
                     <span className="project-explorer-tab-copy"><strong>{project.title}</strong><small>{project.label}</small></span>
                     <Icon name="arrowRight" size={15} />
                   </button>
-                  <a href={`/projects/${project.slug}`} aria-label={`Read ${project.title} case study`} title={`Read ${project.title} case study`}><Icon name="arrowUpRight" size={14} /></a>
+                  <a href={`/#/projects/${project.slug}`} aria-label={`View ${project.title} case study`} title={`View ${project.title} case study`}>Case study <Icon name="arrowRight" size={14} /></a>
                 </div>
               ))}
               <a className="project-explorer-all" href="#work">
